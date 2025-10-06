@@ -1,0 +1,14 @@
+# 환경 변수 및 비밀 정보
+.env
+.env.*
+
+# 가상 환경 / 의존성
+.venv/
+node_modules/
+
+# 빌드 및 캐시
+.DS_Store
+/dist/
+/build/
+coverage/
+*.log

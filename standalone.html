@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>귀여운 십이지신 터치 - 단일 파일 버전</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+        background: radial-gradient(circle at top, #fff8e7, #ffe9f0 45%, #f6faff);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .app {
+        width: min(420px, 100%);
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 32px;
+        padding: 36px 32px;
+        box-shadow: 0 18px 40px rgba(255, 182, 193, 0.28);
+        border: 2px solid rgba(255, 202, 213, 0.7);
+      }
+
+      .card__header {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .card__title {
+        font-family: 'Jua', 'Gamja Flower', 'Noto Sans KR', 'Apple SD Gothic Neo',
+          'Malgun Gothic', cursive;
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        margin: 0 0 12px;
+        color: #ff6f91;
+      }
+
+      .card__subtitle {
+        margin: 0;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .card__display {
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 170, 195, 0.4);
+        padding: 24px;
+        text-align: center;
+      }
+
+      .card__hint {
+        color: #7a7a7a;
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      .animal-emoji {
+        font-size: clamp(4rem, 12vw, 5.5rem);
+      }
+
+      .animal-name {
+        margin: 0;
+        font-size: clamp(1.4rem, 5vw, 1.8rem);
+        color: #4b5563;
+        font-weight: 600;
+      }
+
+      .animal-message {
+        margin: 0;
+        color: #6b7280;
+        line-height: 1.6;
+      }
+
+      .card__footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .touch-button {
+        font-family: 'Jua', 'Gamja Flower', 'Noto Sans KR', 'Apple SD Gothic Neo',
+          'Malgun Gothic', cursive;
+        font-size: 1.4rem;
+        padding: 14px 32px;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4 60%, #fad0c4);
+        border: none;
+        border-radius: 999px;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 10px 20px rgba(255, 170, 195, 0.35);
+      }
+
+      .touch-button:focus-visible {
+        outline: 3px solid rgba(255, 182, 193, 0.9);
+        outline-offset: 4px;
+      }
+
+      .touch-button:hover,
+      .touch-button:active {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 32px rgba(255, 170, 195, 0.45);
+      }
+
+      .card__progress {
+        margin: 0;
+        color: #7a7a7a;
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 16px;
+        }
+
+        .card {
+          padding: 28px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <section class="card" aria-live="polite">
+        <header class="card__header">
+          <h1 class="card__title">귀여운 십이지신 동물 친구들</h1>
+          <p class="card__subtitle">
+            버튼을 터치할 때마다 다음 동물이 차례대로 등장해요.
+          </p>
+        </header>
+        <div class="card__display" data-role="display">
+          <p class="card__hint">터치해서 첫 번째 동물을 만나보세요!</p>
+        </div>
+        <footer class="card__footer">
+          <button class="touch-button" type="button" data-role="touch-button">
+            터치!
+          </button>
+          <p class="card__progress" data-role="progress" aria-live="polite"></p>
+        </footer>
+      </section>
+    </main>
+    <script>
+      (function () {
+        const zodiacAnimals = [
+          {
+            name: '쥐',
+            emoji: '🐭',
+            message:
+              '재빠르고 영리한 쥐가 먼저 인사해요! 오늘의 시작을 밝게 열어줄 거예요.'
+          },
+          {
+            name: '소',
+            emoji: '🐮',
+            message:
+              '우직한 소가 느긋하게 걸어오네요. 꾸준함이 오늘의 키워드!'
+          },
+          {
+            name: '호랑이',
+            emoji: '🐯',
+            message:
+              '용맹한 호랑이가 힘찬 포효를 들려줘요. 자신감을 가져봐요!'
+          },
+          {
+            name: '토끼',
+            emoji: '🐰',
+            message: '통통 튀는 토끼가 깡충! 귀여운 미소로 행복을 나눠줘요.'
+          },
+          {
+            name: '용',
+            emoji: '🐲',
+            message: '신비로운 용이 등장했어요. 상상력과 용기가 가득!'
+          },
+          {
+            name: '뱀',
+            emoji: '🐍',
+            message:
+              '지혜로운 뱀이 조용히 다가와 속삭여요. 차분함을 잃지 마세요.'
+          },
+          {
+            name: '말',
+            emoji: '🐴',
+            message:
+              '자유로운 말이 달려와요! 시원한 바람과 함께 기분 전환 어떠세요?'
+          },
+          {
+            name: '양',
+            emoji: '🐑',
+            message:
+              '포근한 양이 폭신한 구름을 안겨줘요. 따뜻한 쉼을 누려봐요.'
+          },
+          {
+            name: '원숭이',
+            emoji: '🐵',
+            message:
+              '재주 많은 원숭이가 장난스러운 눈빛을 보내요. 웃음을 잃지 마세요!'
+          },
+          {
+            name: '닭',
+            emoji: '🐔',
+            message:
+              '꼬끼오! 부지런한 닭이 새 하루를 알립니다. 알찬 하루를 준비해요.'
+          },
+          {
+            name: '개',
+            emoji: '🐶',
+            message:
+              '든든한 개가 꼬리를 흔들며 반겨줘요. 믿음직한 친구를 떠올려봐요.'
+          },
+          {
+            name: '돼지',
+            emoji: '🐷',
+            message:
+              '사랑스러운 돼지가 배를 두드리며 웃어요. 맛있는 행복이 찾아올 거예요!'
+          }
+        ];
+
+        const getNextAnimalIndex = (currentIndex) =>
+          (currentIndex + 1) % zodiacAnimals.length;
+
+        const display = document.querySelector('[data-role="display"]');
+        const button = document.querySelector('[data-role="touch-button"]');
+        const progress = document.querySelector('[data-role="progress"]');
+
+        if (!display || !button || !progress) {
+          return;
+        }
+
+        const total = zodiacAnimals.length;
+        let currentIndex = -1;
+
+        const renderAnimal = () => {
+          currentIndex = getNextAnimalIndex(currentIndex);
+          const animal = zodiacAnimals[currentIndex];
+
+          display.innerHTML = `
+            <span class="animal-emoji" role="img" aria-label="${animal.name}">${animal.emoji}</span>
+            <p class="animal-name">${currentIndex + 1}. ${animal.name}</p>
+            <p class="animal-message">${animal.message}</p>
+          `;
+
+          progress.textContent = `${currentIndex + 1} / ${total}`;
+        };
+
+        const handlePress = (event) => {
+          event.preventDefault();
+          renderAnimal();
+        };
+
+        button.addEventListener('click', handlePress);
+        button.addEventListener(
+          'touchstart',
+          (event) => {
+            handlePress(event);
+          },
+          { passive: false }
+        );
+      })();
+    </script>
+  </body>
+</html>

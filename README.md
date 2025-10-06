@@ -24,6 +24,8 @@
 node tests/zodiac.test.js
 ```
 
+GitHub Actions CI가 동일한 명령으로 풀 리퀘스트와 주요 브랜치 푸시에 대해 자동으로 테스트를 실행해줍니다.
+
 ## 프로젝트 구조
 
 - `index.html`: 앱의 메인 페이지

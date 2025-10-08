@@ -11,3 +11,4 @@
 
 ## 2024-05-22
 - 서버 없이 실행 가능한 `standalone.html` 단일 파일 버전을 추가하고 사용법을 README에 정리했습니다.
+- CI 실행 시 `standalone.html`을 GitHub Actions 아티팩트로 업로드해 모바일에서도 바로 내려받을 수 있도록 했습니다.

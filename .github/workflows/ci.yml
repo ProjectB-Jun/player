@@ -19,3 +19,9 @@ jobs:
           node-version: '18'
       - name: Run tests
         run: node tests/zodiac.test.js
+      - name: Upload standalone artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zodiac-standalone
+          path: standalone.html
